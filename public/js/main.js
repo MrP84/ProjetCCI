@@ -9,15 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#toggleMenu').removeClass('showMenu').addClass('hiddenMenu');
     $('#showUpdateForm').removeClass('showUpdateForm').addClass('hidden');
 
-    $('.lienModal').on('click', function(e) {
+    $('#deleteButton').on('click', (e) => {
         e.preventDefault();
+        let idTripperDelete = $('#deleteButton').data('id');
         $('#deleteModal').modal('show');
-        var linkNb = $(this).data('id');
-        console.log(linkNb);
+        console.log(idTripperDelete);
 
-        document.getElementById('deleteLink').addEventListener('click', function() {
-            document.getElementById('deleteLink').setAttribute('href', 'delUser.php?line=' + linkNb);
-        })
+        $('#deleteLink').on('click', () => {
+            $('#deleteLink').attr('href', 'deleteTripper.php?id=' + idTripperDelete);
+        });
 
 
     });
@@ -160,7 +160,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $('#validateUpdate').on('click', (e) => {
         e.preventDefault();
-        console.log(stockage);
-        // let firstNameUpdate = ($.type($('#firstNameUpdate').val()) !== 'undefined')? $('#firstNameUpdate').val() : stockage[])
+        //console.log(idTripperUpdate);
+        let firstNameUpdate = ($.type($('#firstNameUpdate').val()) !== 'undefined')? $('#firstNameUpdate').val() : stockage[0].value;
+        let lastNameUpdate = ($.type($('#lastNameUpdate').val()) !== 'undefined')? $('#lastNameUpdate').val() : stockage[1].value;
+        let pseudoUpdate = ($.type($('#pseudoUpdate').val()) !== 'undefined')? $('#pseudoUpdate').val() : stockage[2].value;
+        let emailUpdate = ($.type($('#emailUpdate').val()) !== 'undefined')? $('#emailUpdate').val() : stockage[3].value;
+        let cityUpdate = ($.type($('#cityUpdate').val()) !== 'undefined')? $('#cityUpdate').val() : stockage[4].value;
+        let countryUpdate = ($.type($('#countryUpdate').val()) !== 'undefined')? $('#countryUpdate').val() : stockage[7].value;
+        let bioUpdate = ($.type($('#bioUpdate').val()) !== 'undefined')? $('#bioUpdate').val() : stockage[6].value;
+        let idTripperUpdate = $('#idTripper').val();
+        //console.log(idTripperUpdate);
+
+        $.ajax({
+            url : 'update.php',
+            data : {firstNameUpdate, lastNameUpdate, emailUpdate, pseudoUpdate, cityUpdate, countryUpdate, bioUpdate},
+            method : 'post'
+        }).done( () => {
+            stockage[0].value = firstNameUpdate;
+            stockage[1].value = lastNameUpdate;
+            stockage[2].value = pseudoUpdate;
+            stockage[3].value = emailUpdate;
+            stockage[4].value = cityUpdate;
+            stockage[7].value = countryUpdate;
+            stockage[6].value = bioUpdate;
+
+            $('#showUpdateForm').removeClass('showUpdateForm').addClass('hidden');
+
+            $('#updateFirstName').text(firstNameUpdate);
+            $('#updateName').prop('disabled', false);
+            //console.log(stockage);
+        });
+
     })
 });
