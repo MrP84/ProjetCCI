@@ -5,9 +5,10 @@ include('lib/files.fct.php');
 //ini_set('display_errors',1);
 
 $title = "Votre carnet de voyage numérique";
-$h1 = "Racontez ce que vous vivez.";
-//$vue = "index.phtml";
 $image = "img/accueil.jpg";
+$path = '.';
+$vue = $path . '/tpl/index.phtml';
+$index = true;
 //input date is the next friday
 $shift = date('N');
 switch ($shift) {
@@ -37,4 +38,4 @@ $day = date('d') + $shift;
 $day<10?$departure = date('Y-m-').'0'.$day:$departure = date('Y-m-').$day;
 
 
-include('tpl/index.phtml');
+include('tpl/layout.phtml');
