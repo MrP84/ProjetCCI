@@ -1,4 +1,4 @@
-<div class="container">
+
   <div class="row">
     <div class="col-md-6">
 
@@ -63,7 +63,7 @@
       <div class="footerEdit">
 
         <div class="deleteTripper">
-          <button type="button" name="button" class="btn btn-danger">Supprimer mon compte</button>
+          <button type="button" name="button" class="btn btn-danger" id="deleteButton" data-id="2">Supprimer mon compte</button>
         </div>
 
         <div class="updateTripper">
@@ -77,14 +77,17 @@
 
     <div class="col-md-6" style="width:100%">
       <div class="showUpdateForm" id="showUpdateForm">
-        <form action="updateTripper.php" method="POST" enctype="multipart/form-data">
+        <form action="update.php" method="POST" enctype="multipart/form-data">
+          <div class="updateForm">
+            <input type="hidden" name="idTripper" value="<?=$_SESSION['id'];?>" id="idTripper">
+          </div>
           <div class="updateForm" id="updateAvatarForm"></div>
           <div class="updateForm" id="updateNameForm"></div>
           <div class="updateForm" id="updateLocationForm">
             <select name="countryUpdate" id="countryUpdate" class="custom-select hidden">
-                <?php foreach ($dbCountries as $key => $value):?>
-                    <option value="<?=$value['idCountry'];?>" <?=($value['nom_fr_fr'] === $dbTripperEdit['nom_fr_fr'])?'selected':'';?>><?=$value['nom_fr_fr'];?></option>
-                <?php endforeach;?>
+              <?php foreach ($dbCountries as $key => $value):?>
+                <option value="<?=$value['idCountry'];?>" <?=($value['nom_fr_fr'] === $dbTripperEdit['nom_fr_fr'])?'selected':'';?>><?=$value['nom_fr_fr'];?></option>
+              <?php endforeach;?>
             </select>
           </div>
           <div class="updateForm" id="updatePseudoForm"></div>
@@ -98,5 +101,23 @@
 
     </div>
   </div>
-</div>
-</div>
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="centeredModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title deleteInfo" id="Confirmation">Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="deleteInfo">Êtes-vous sûr de vouloir supprimer votre compte ? <br/>Sans être irréversible, cette action entraîne la suppression de toutes les informations vous concernant ainsi qu'une inscription au <strong>Fichier National des Anciens Membres de TripNoteBook</strong>. Bref... c'est vous qui voyez, nous on vous aura prévenu !</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="col btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <a href="#" class="col btn btn-primary" id="deleteLink">Confirmer</a>
+        </div>
+      </div>
+    </div>
+  </div>

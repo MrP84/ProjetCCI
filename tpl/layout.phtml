@@ -11,36 +11,69 @@
   <title>TripNoteBook | <?=$title;?></title>
 </head>
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a href="index.php" class="nav-link active" style="color:#FFF;">Retour à l'accueil</a></li>
-        <li class="nav-item"><a href="../logout.php" class="nav-link <?=(isset($_SESSION['logged']) && $_SESSION['logged'] === true)?'show_success':'hidden';?>" style="color:#FFF;">Déconnexion <i class="fa fa-sign-out"></i></a></li>
-      </ul>
-      <!-- <h1 class="navbar-brand" href="#"><?=$title;?></h1> -->
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> -->
-        <!-- <ul class="navbar-nav">
-          <li class="nav-item"><a href="index.php" class="nav-link <?=(isset($_SESSION['logged']) && $title == 'Accueil Admin')?'active':'';?>">Accueil</a></li>
-          <li class="nav-item"><a href="addUser.php" class="nav-link <?=(isset($_SESSION['logged']) && $title == 'Ajouter un utilisateur')?'active':'';?>">Ajouter un utilisateur</a></li>
-          <li class="nav-item"><a href="#" class="nav-link <?=(isset($_SESSION['logged']) && $title == 'Rédiger un article')?'active':'';?>">Rédiger un article</a></li>
-          <li class="nav-item"><a href="logout.php" class="nav-link <?=(isset($_SESSION['logged']))?'active':'disabled';?>">Déconnexion <i class="fa fa-sign-out"></i></a></li>
-        </ul>
-        <div class="d-flex justify-content-end">
-          <span class="message"><?=(isset($_SESSION['logged']))?'Bienvenue '.$_SESSION['user'].' !':'';?></span>
+
+<header>
+  <?php if (isset($index) && $index) :?>
+  <img src="img/accueil.jpg" alt="image d'accueil" title="banner" width="100%"/>
+  <?php endif;?>
+  <nav class="grid">
+    <figure class="g">
+      <img class="logo" src="img/logo.jpg" alt="logo" title="écrivez votre histoire"/>
+    </figure>
+    <div class="nav-item a"><a href="index.php" class="nav-link">Accueil</a></div>
+    <div class="nav-item b"><a href="#" class="nav-link">Parcourir les carnets</a></div>
+    <div class="nav-item c"><a href="#" class="nav-link">Comment ça marche ?</a></div>
+    <div class="nav-item d"><a href="#" class="nav-link">Livre d'or</a></div>
+
+    <?php if (isset($index) && $index) :?>
+    <div class="nav-item f"><a href="login.php" class="nav-link">Connexion</a></div>
+    <div class="nav-item e"><a href="login.php" class="nav-link">Inscription</a></div>
+    <?php endif;?>
+
+    <?php if (!empty($_SESSION) && $_SESSION['logged']) :?>
+    <div class="nav-item h myAccount">
+
+      <div class="">
+        <a href="#" class="nav-item">
+          <img src="<?=str_replace('../','./',$_SESSION['avatar']);?>" alt="Avatar de <?=$_SESSION['pseudo'];?>" style="border-radius:50%;border: 1px solid #000;"/>
+        </a>
+      </div>
+      <div class="twoLinesMenu">
+        <p class="nav-link">
+          Bienvenue <?=$_SESSION['pseudo'];?> !
+        </p>
+        <p class="nav-link">
+          <a href="#" id="myAccount">Mon espace privé</a>
+        </p>
+        <div class="toggleMenu showMenu" id="toggleMenu">
+          <ul id="displayMenu">
+            <li><a href="./CRUD/editTripper.php">Editer mon profil <i class="fa fa-pencil" aria-hidden="true"></i></a></li>
+            <li><a href="#">Voir mes carnets <i class="fa fa-eye" aria-hidden="true"></i></a></li>
+            <li class="logoutLink"><a href="logout.php">Déconnexion <i class="fa fa-sign-out"></i></a></li>
+          </ul>
         </div>
-      </nav> -->
+      </div>
 
+    </div>
+    <?php endif;?>
 
-  </header>
-    <h1><?=$title;?></h1>
+  </nav>
+  <?php if (isset($index) && $index) :?>
 
+  <div class="title_group">
+    <h1>Racontez ce que vous vivez</h1>
+    <div class="link_buttons">
+      <a href="login.php" class="btn">Inscription</a>
+      <a href="#" class="btn">Démarrer</a>
+    </div>
+  </div>
+  <?php endif;?>
+</header>
 
-
-<main>
-  <?php include($vue);?>
+<main <?=(!isset($index) || !$index)?'style="position: absolute;"':'';?>>
+  <div class="container" style="margin-top: 5rem;">
+    <?php include($vue);?>
+  </div>
 </main>
 
 
