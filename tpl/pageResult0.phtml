@@ -1,0 +1,65 @@
+<body>
+  <header>
+    <h1>Bon de commande</h1>
+  </header>
+
+  <main>
+    <div class="container-fluid">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id Commande</th>
+            <th scope="col">Nom du Client</th>
+            <th scope="col">Pays</th>
+            <th scope="col">Date de commande</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><?=$dbResult[0]['orderNumber']?></td>
+            <td><a href="customerEdit.php?name=<?=$dbResult[0]['customerNumber'].'&comm='.$dbResult[0]['orderNumber'];?>" class="customerName"><?=$dbResult[0]['customerName']?></a><br/><small id="infoEdit">(Cliquez pour mettre à jour les données du contact)</small></td>
+
+            <td><?=$dbResult[0]['country']?></td>
+            <td><?=$dbResult[0]['date'];?></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Nom du produit</th>
+              <th scope="col">Quantité commandée</th>
+              <th scope="col">Prix unitaire (en $)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($dbResult as $key => $value):?>
+              <tr class="list">
+                <td><a href="<?='update.php?data='.$value['orderNumber'].'&line='.$value['productCode'];?>"><i class="fa fa-pencil-square-o"></i></a><?=$value['productName'];?></td>
+                <td><?=$value['quantityOrdered'];?></td>
+                <td><?=$value['priceEach'];?></td>
+              </tr>
+            <?php endforeach;?>
+              <tr class="total">
+                <td colspan="2">Total :</td>
+                <td><?=$dbAmount;?> $</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="container">
+        <p><span class="nbCommand">Livraison  :</span><br/><?=$dbResult[0]['contactFirstName'].' '.$dbResult[0]['contactLastName'];?><br/>
+          <?= $dbResult[0]['addressLine1'];?><?=($dbResult[0]['addressLine2'])?'<br>'.$dbResult[0]['addressLine2'].'<br/>':'<br/>';?>
+          <?=$dbResult[0]['postalCode'].' '.$dbResult[0]['city'].', '.$dbResult[0]['country'];?>
+        </p>
+        <p><span class="nbCommand">Téléphone :</span> <a href="tel:<?=(int)$dbResult[0]['phone'];?>"><?= wordwrap($dbResult[0]['phone'], 3, ' ', true);?></p>
+      </div>
+  </main>
+
+  <footer>
+    <a href="index.php" id="backLink" class="btn btn-primary">Retour à l'accueil</a>
+  </footer>

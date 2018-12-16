@@ -1,0 +1,29 @@
+<body>
+  <header>
+    <h1>Mise à jour</h1>
+  </header>
+  <div class="container">
+    <p class="info">Vous mettez à jour la commande : <span class="nbCommand"><?=$updateLine;?></span></p>
+  </div>
+
+  <form action="<?='update.php?data='.$updateLine.'&line='.$updateProduct;?>" method="POST">
+    <div class="form-group container">
+      <select name="productsList" id="productsList" class="custom-select">
+        <option selected>Choix du produit</option>
+          <?php foreach ($dbProducts as $key => $value):?>
+            <option value="<?=$value['productCode'];?>" <?=($updateProduct == $value['productCode'])?'selected':''?>><?=$value['productName'];?></option>
+          <?php endforeach;?>
+      </select>
+    </div>
+    <div class="form-group container">
+      <label for="quantity">Nouvelle quantité : </label>
+      <input type="text" name="quantity" id="quantity" class="form-control" value="">
+    </div>
+    <div class="form-group container">
+      <label for="quantity">Nouveau prix : </label>
+      <input type="text" name="price" id="price" class="form-control" value="">
+    </div>
+    <div class="form-group container">
+      <button type="submit" name="button" class="btn btn-primary">Modifier</button>
+    </div>
+</form>

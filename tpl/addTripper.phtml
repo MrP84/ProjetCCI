@@ -1,0 +1,84 @@
+<div class="displayErrors alert alert-danger" role="alert">
+  <ul>
+    <?php foreach ($error as $key => $value):?>
+      <li>
+        <?=$value;?>
+      </li>
+    <?php endforeach;?>
+  </ul>
+</div>
+
+<form action="./CRUD/addTripper.php<?=(isset($_GET['line']))?'?line='.$editUser:'';?>" method="POST" enctype="multipart/form-data" class="container">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label for="firstName">Prénom</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" value="<?=(isset($_GET['line']))?$firstName:'';?>" required/>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Nom</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" value="<?=(isset($_GET['line']))?$lastName:'';?>" required/>
+            </div>
+            <div class="form-group">
+                <label for="password1">Mot de passe</label>
+                <input type="password" class="form-control" id="password1" name="password1" value="" required/>
+                <small class="show">min. 8 caractères avec au moins une majuscule et au moins un chiffre</small>
+                <div class="validation hidden">
+                    <div class="color a1"></div>
+                    <div class="color a2"></div>
+                    <div class="color a3"></div>
+                    <div class="color a4"></div>
+                    <div class="color a5"></div>
+                    <div class="color a6"></div>
+                    <div class="color a7"></div>
+                    <div class="color a8"></div>
+                    <div class="color a9"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirmation du mot de passe</label>
+                <input type="password" class="form-control" id="password2" name="password2" value="" disabled required/>
+                <small class="hidden_error">Les mots de passe ne sont pas identiques</small>
+                <span class="hidden_success"><i class="fa fa-check" aria-hidden="true"></i></span>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" name="email" value="<?=(isset($_GET['line']) || isset($emailTest))?$emailTest:'';?>" required/>
+            </div>
+            <div class="form-group">
+                <label for="pseudo">Pseudo</label>
+                <input type="text" class="form-control" id="pseudo" name="pseudo" value="<?=(isset($_GET['line']) || isset($pseudoTest))?$pseudoTest:'';?>" required/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="dateOfBirth">Date de Naissance</label>
+                <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value="<?=(isset($_GET['line']))?$userName:'';?>" max="<?=date('Y-m-d');?>" required/>
+            </div>
+            <div class="form-group">
+                <label for="country">Pays</label>
+                <select name="country" id="country" class="custom-select">
+                    <option selected>Choisissez</option>
+                    <?php foreach ($dbCountries as $key => $value):?>
+                        <option value="<?=$value['idCountry'];?>" <?=($value['alpha2'] === $pays)?'selected':'';?>><?=$value['nom_fr_fr'];?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="city">Ville</label>
+                <input type="text" class="form-control" id="city" name="city" value="<?=(isset($_GET['line']))?$userName:'';?>" required/>
+            </div>
+            <div class="form-group">
+                <label for="avatar">Choisissez votre avatar</label>
+                <input type="file" class="form-control" id="avatar" name="avatar" value="<?=(isset($_GET['line']))?$urlAvatar:'';?>"/>
+                <small>Formats autorisés : .jpeg, .jpg, .png, .pdf</small>
+            </div>
+            <div class="form-group">
+                <label for="bio">A propos de vous...</label>
+                <input type="textarea" class="form-control" id="bio" name="bio" value="<?=(isset($_GET['line']))?$bio:'';?>" required/>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="addTripper"><?=(isset($_GET['line']))?'Enregistrer les modifications':'Enregistrer l\'utilisateur';?></button>
+        </div>
+    </form>

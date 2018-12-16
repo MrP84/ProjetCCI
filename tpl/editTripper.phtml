@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+
+      <div class="headerEdit">
+
+        <div class="tripperAvatar">
+          <div class="">
+            <img src="<?=str_replace('_50x50.jpeg', '.jpg',  $dbTripperEdit['avatar']);?>" alt="avatar de D" class="avatarEdit"/>
+          </div>
+          <div class="">
+            <button type="button" name="button" id="updateAvatar"><i class="fa fa-pencil"></i></button>
+          </div>
+
+        </div>
+
+        <div class="tripperName">
+          <p id="updateFirstName"><?=$dbTripperEdit['firstName'];?></p>
+          <p id="updateLastName"><?=$dbTripperEdit['lastName'];?></p>
+          <button type="button" name="button" id="updateName"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        </div>
+
+        <div class="tripperLocation">
+          <p id="updateCity"><?=$dbTripperEdit['city'];?></p>
+          <p><?=$dbTripperEdit['nom_fr_fr'];?></p>
+          <input type="hidden" id="updateCountry" name="idCountry" value="<?=$dbTripperEdit['idCountry'];?>">
+          <button type="button" name="button" id="updateLocation"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        </div>
+
+      </div>
+
+      <div class="bodyEdit">
+
+        <div class="tripperMail">
+          <p id="updatePseudo"><?=$dbTripperEdit['pseudo'];?></p>
+          <p id="updateBio"><?=$dbTripperEdit['bio'];?></p>
+        </div>
+
+        <div class="">
+          <p id="updateEmail"><?=$dbTripperEdit['email'];?></p>
+          <button type="button" name="button" id="updateInfo"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        </div>
+
+      </div>
+
+      <div class="mainEdit">
+
+        <div class="noteBookTripper">
+          <ul>
+            <?php if(!empty($dbNoteBooks)){foreach ($dbNoteBooks as $key => $value):?>
+              <li><?=$value['title'] . ' - ' . $value['departure'];?></li>
+            <?php endforeach;} else { echo 'Vous n\'avez encore aucun carnet, <a href="createNoteBook.php">lancez-vous !</a>';}
+            ;?>
+          </ul>
+        </div>
+
+        <div class="updateTripper">
+          <button type="button" name="button" class="btn btn-primary"><?=(!empty($dbNoteBooks))?'Consulter mes carnets':'Créer un carnet';?></button>
+        </div>
+
+      </div>
+
+      <div class="footerEdit">
+
+        <div class="deleteTripper">
+          <button type="button" name="button" class="btn btn-danger">Supprimer mon compte</button>
+        </div>
+
+        <div class="updateTripper">
+          <button type="button" name="button" class="btn btn-primary">Modifier mon mot de passe</button>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="col-md-6" style="width:100%">
+      <div class="showUpdateForm" id="showUpdateForm">
+        <form action="updateTripper.php" method="POST" enctype="multipart/form-data">
+          <div class="updateForm" id="updateAvatarForm"></div>
+          <div class="updateForm" id="updateNameForm"></div>
+          <div class="updateForm" id="updateLocationForm">
+            <select name="countryUpdate" id="countryUpdate" class="custom-select hidden">
+                <?php foreach ($dbCountries as $key => $value):?>
+                    <option value="<?=$value['idCountry'];?>" <?=($value['nom_fr_fr'] === $dbTripperEdit['nom_fr_fr'])?'selected':'';?>><?=$value['nom_fr_fr'];?></option>
+                <?php endforeach;?>
+            </select>
+          </div>
+          <div class="updateForm" id="updatePseudoForm"></div>
+          <div class="updateForm" id="updateEmailForm"></div>
+          <div class="updateForm" id="updateBioForm"></div>
+          <div class="" action="updateTripper.php" method="POST">
+            <button type="button" name="button" class="btn btn-primary" id="validateUpdate">Valider</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
