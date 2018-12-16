@@ -125,23 +125,18 @@ try {
           'idTripper' => $idTripper
         ));
 
-
+        $_SESSION['logged'] = true;
+        $_SESSION['user'] = $firstName;
+        $_SESSION['avatar'] = $urlAvatar;
+        $_SESSION['pseudo'] = $pseudo;
+        $_SESSION['id'] = $idTripper;
         header('Location:../index.php');
       }
     } else {
       $error[] = 'merci de remplir tous les champs';
       echo 'Oh non... tous les champs ne sont pas remplis<br>';
     }
-    //cas où on récupère les infos après une mise à jour
-    //  if (array_key_exists('line', $_GET)) {
-    //    $editUser = $_GET['line'];
-    //
-    //    $dbprepare = $dbConnect -> prepare('UPDATE trippers SET userName = :userName, email = :email, firstName = :firstName, lastName = :lastName, password = :password, avatar = :avatar, bio = :bio WHERE idUser = :editUser');
-    //
-    //    $dbprepare -> execute(array('userName' => $userName, 'email' => $email, 'firstName' => $firstName, 'lastName' => $lastName, 'password' => $password, 'avatar' => $urlAvatar, 'bio' => $bio, 'editUser' => $editUser));
-    //
-    //    header('Location:../index.php');
-    // }
+
   } catch (PDOException $e) {
     $error[] = $e->getMessage();
   } catch (Exception $e) {
