@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<header>
+<header <?=(isset($index) && $index)?'':'style="position: static'?>">
   <?php if (isset($index) && $index) :?>
   <img src="img/accueil.jpg" alt="image d'accueil" title="banner" width="100%"/>
   <?php endif;?>
@@ -70,7 +70,7 @@
   <?php endif;?>
 </header>
 
-<main <?=(!isset($index) || !$index)?'style="position: absolute;"':'';?>>
+<main <?=(!isset($index) || !$index)?'style="position: static;"':'';?>>
   <div class="container" style="margin-top: 5rem;">
     <?php include($vue);?>
   </div>
