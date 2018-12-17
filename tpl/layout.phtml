@@ -12,20 +12,20 @@
 </head>
 <body>
 
-<header <?=(isset($index) && $index)?'':'style="position: static'?>">
+<header <?=(isset($index) && $index)?'':'style="position: static"'?>>
   <?php if (isset($index) && $index) :?>
   <img src="img/accueil.jpg" alt="image d'accueil" title="banner" width="100%"/>
   <?php endif;?>
   <nav class="grid">
-    <figure class="g">
+    <!-- <figure class="g">
       <img class="logo" src="img/logo.jpg" alt="logo" title="écrivez votre histoire"/>
-    </figure>
+    </figure> -->
     <div class="nav-item a"><a href="index.php" class="nav-link">Accueil</a></div>
     <div class="nav-item b"><a href="#" class="nav-link">Parcourir les carnets</a></div>
     <div class="nav-item c"><a href="#" class="nav-link">Comment ça marche ?</a></div>
     <div class="nav-item d"><a href="#" class="nav-link">Livre d'or</a></div>
 
-    <?php if (isset($index) && $index) :?>
+    <?php if ((isset($index) && $index) && (empty($_SESSION))) :?>
     <div class="nav-item f"><a href="login.php" class="nav-link">Connexion</a></div>
     <div class="nav-item e"><a href="login.php" class="nav-link">Inscription</a></div>
     <?php endif;?>
@@ -35,7 +35,7 @@
 
       <div class="">
         <a href="#" class="nav-item">
-          <img src="<?=str_replace('../','./',$_SESSION['avatar']);?>" alt="Avatar de <?=$_SESSION['pseudo'];?>" style="border-radius:50%;border: 1px solid #000;"/>
+          <img src="<?=str_replace('../',$path.'/',$_SESSION['avatar']);?>" alt="Avatar de <?=$_SESSION['pseudo'];?>" style="border-radius:50%;border: 1px solid #000;"/>
         </a>
       </div>
       <div class="twoLinesMenu">
