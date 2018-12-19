@@ -17,7 +17,7 @@ $checkPwd = '';
 try {
 
     if (array_key_exists('userNameAuth', $_POST) && array_key_exists('inputPassword', $_POST)) {
-        $checkPwd = $_POST['inputPassword'];
+        $checkPwd = hash('sha256',$_POST['inputPassword']);
         $checkUser = $_POST['userNameAuth'];
 
         $dbConnect = connectingToBdd();
@@ -25,7 +25,9 @@ try {
         $dbPrepare -> execute(array('pseudo' => $checkUser));
         $user = $dbPrepare->fetch(PDO::FETCH_ASSOC);
 
-        if (password_verify($checkPwd, $user['password']) && $user['admin']) {
+
+
+        if ($checkPwd === $user['password'] && $user['admin']) {
             $_SESSION['logged'] = true;
             $_SESSION['user'] = $user['firstName'];
             $_SESSION['avatar'] = $user['avatar'];
@@ -34,7 +36,7 @@ try {
 
             header('Location:./admin/index.php');
             exit();
-        } else if (password_verify($checkPwd, $user['password']) && !$user['admin']) {
+        } else if ($checkPwd === $user['password'] && !$user['admin']) {
             $_SESSION['logged'] = true;
             $_SESSION['user'] = $user['firstName'];
             $_SESSION['avatar'] = $user['avatar'];
