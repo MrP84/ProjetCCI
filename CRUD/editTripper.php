@@ -11,9 +11,6 @@ $path = '..';
 $vue = $path . '/tpl/editTripper.phtml';
 $error = [];
 
-
-//var_dump($_SESSION);
-
 try {
   $dbConnect = connectingToBdd();
 
