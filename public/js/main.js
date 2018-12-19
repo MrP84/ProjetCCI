@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $('#toggleMenu').removeClass('showMenu').addClass('hiddenMenu');
     $('#showUpdateForm').removeClass('showUpdateForm').addClass('hidden');
+    $('#showPasswordForm').removeClass('showPasswordForm').addClass('hidden');
 
     $('#deleteButton').on('click', (e) => {
         e.preventDefault();
@@ -84,6 +85,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }).appendTo(location);
     };
 
+    function validatePassword(password) {
+        if (password.length >= 8 && password.match(/[0-9]/) && password.match(/[A-z]/)) {
+            console.log('ok ', password);
+            return password;
+            console.log("mon retour ok = ",retour);
+        } else {
+            return false;
+        }
+ }
+
+    function checkPassword(password1, password2) {
+        if (password1 === password2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     $('#updateName').on('click', () => {
         ($('#showUpdateForm').attr('class') === 'hidden')?$('#showUpdateForm').removeClass('hidden').addClass('showUpdateForm'):'';
         createAndAppendInput('text','firstNameUpdate','headerUpdate', $('#updateFirstName').text(), '#updateNameForm');
@@ -124,6 +143,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+    $('#passwordUpdate').on('click', () => {
+      ($('#showPasswordForm').attr('class') === 'hidden')?$('#showPasswordForm').removeClass('hidden').addClass('showPasswordForm'):'';
+      var pwd1;
+      var pwd2;
+  });
+
+      $('#initialPassword').on('change', () => {
+          $.ajax({
+              url: 'checkPwd.php',
+              data: { pwdKey : sha256($('#initialPassword').val()) },
+              async: false,
+              method : 'POST'
+          }).done((result) => {
+              if (result === 'ok') {
+                  $('#newPassword').prop('disabled', false);
+
+                  $('#newPassword').on('keyup', function() {
+                      if (pwd1 = validatePassword($(this).val())) {
+                          $('#confirmNewPassword').prop('disabled', false);
+                          console.log(sha256(pwd1));
+                      } else {
+                          console.log('erreur');
+                      };
+                  });
+
+                  $('#confirmNewPassword').on('keyup', function() {
+                      if ($('#initialPassword').val() !== "" && $('#newPassword').val() !== "" && $('#confirmNewPassword').val() !== "") {
+
+                          if (pwd2 = validatePassword($(this).val())) {
+                              console.log(pwd2);
+                              if (checkPassword(pwd1, pwd2)) {
+                                  if ($('#error_show').attr('class') === 'error_show') {
+                                        $('#error_show').removeClass('error_show').addClass('hidden');
+                                  }
+                                  $('#validateNewPassword').prop('disabled', false).addClass('btn-success');
+                                  console.log('mots de passe identiques');
+                              } else {
+                                  let error = $('<div>').attr({
+                                      class : 'error_show',
+                                      id: 'error_show'
+                                  }).text('Les mots de passe ne sont pas identiques.');
+                                  error.appendTo('#showPasswordForm');
+                              }
+                          }
+                      }
+                  });
+              } else {
+                  $('#newPassword').prop('disabled', true);
+              }
+
+
+          })
+
+
+      });
+
+
+
     stockage = localStorage.getItem('src');
 
     if (JSON.parse(stockage) !== null) {
@@ -160,21 +237,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $('#validateUpdate').on('click', (e) => {
         e.preventDefault();
-        //console.log(idTripperUpdate);
-        let firstNameUpdate = ($.type($('#firstNameUpdate').val()) !== 'undefined')? $('#firstNameUpdate').val() : stockage[0].value;
-        let lastNameUpdate = ($.type($('#lastNameUpdate').val()) !== 'undefined')? $('#lastNameUpdate').val() : stockage[1].value;
-        let pseudoUpdate = ($.type($('#pseudoUpdate').val()) !== 'undefined')? $('#pseudoUpdate').val() : stockage[2].value;
-        let emailUpdate = ($.type($('#emailUpdate').val()) !== 'undefined')? $('#emailUpdate').val() : stockage[3].value;
-        let cityUpdate = ($.type($('#cityUpdate').val()) !== 'undefined')? $('#cityUpdate').val() : stockage[4].value;
-        let countryUpdate = ($.type($('#countryUpdate').val()) !== 'undefined')? $('#countryUpdate').val() : stockage[7].value;
-        let bioUpdate = ($.type($('#bioUpdate').val()) !== 'undefined')? $('#bioUpdate').val() : stockage[6].value;
+        let firstNameUpdate = ($('#firstNameUpdate').val() !== undefined)? $('#firstNameUpdate').val() : stockage[0].value;
+        let lastNameUpdate = ($('#lastNameUpdate').val() !== undefined)? $('#lastNameUpdate').val() : stockage[1].value;
+        let pseudoUpdate = ($('#pseudoUpdate').val() !== undefined)? $('#pseudoUpdate').val() : stockage[2].value;
+        let emailUpdate = ($('#emailUpdate').val() !== undefined)? $('#emailUpdate').val() : stockage[3].value;
+        let cityUpdate = ($('#cityUpdate').val() !== undefined)? $('#cityUpdate').val() : stockage[4].value;
+        let countryUpdate = ($('#countryUpdate').val() !== undefined)? $('#countryUpdate').val() : stockage[7].value;
+        let bioUpdate = ($('#bioUpdate').val() !== undefined)? $('#bioUpdate').val() : stockage[6].value;
         let idTripperUpdate = $('#idTripper').val();
-        //console.log(idTripperUpdate);
 
         $.ajax({
             url : 'update.php',
             data : {firstNameUpdate, lastNameUpdate, emailUpdate, pseudoUpdate, cityUpdate, countryUpdate, bioUpdate},
-            method : 'post'
+            method : 'POST'
         }).done( () => {
             stockage[0].value = firstNameUpdate;
             stockage[1].value = lastNameUpdate;
@@ -184,12 +259,18 @@ document.addEventListener('DOMContentLoaded', () => {
             stockage[7].value = countryUpdate;
             stockage[6].value = bioUpdate;
 
-            $('#showUpdateForm').removeClass('showUpdateForm').addClass('hidden');
+            localStorage.setItem('src', JSON.stringify(stockage));
 
-            $('#updateFirstName').text(firstNameUpdate);
-            $('#updateName').prop('disabled', false);
-            //console.log(stockage);
         });
+        $('#showUpdateForm').removeClass('showUpdateForm').addClass('hidden');
 
+        $('#updateFirstName').text(firstNameUpdate);
+        $('#updateLastName').text(lastNameUpdate);
+        $('#updatePseudo').text(pseudoUpdate);
+        $('#updateEmail').text(emailUpdate);
+        $('#updateCity').text(cityUpdate);
+        $('#updateCountry').text(countryUpdate);
+        $('#updateBio').text(bioUpdate);
+        $('#updateName').prop('disabled', false);
     })
 });
