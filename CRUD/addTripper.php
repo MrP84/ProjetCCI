@@ -32,7 +32,7 @@ try {
 
     if ($pwd1 == $pwd)
     {
-      $password = password_hash($pwd, PASSWORD_DEFAULT);
+      $password = hash('sha256', $pwd);
     }
     else
     {
