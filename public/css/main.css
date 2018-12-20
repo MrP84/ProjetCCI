@@ -1,22 +1,47 @@
 body {
   background-color: rgba(255,83,13,0.2);
-  /* color: #fff; */
+  /*color: #fff;*/
+  width: 100vw;
 }
 
 header {
-  width:auto;
+  width: 100vw;
+  /* height: 100vh; */
   position: relative;
 }
 
+.accueil {
+  background-image: url('../../img/accueil.jpg');
+  background-position: center 20%;
+  height: 100%;
+}
+
+.burger {
+  display: none;
+}
+
 .grid {
-  max-height: 80px;
-  width: 100%;
-  padding-top: 1%;
-  display: grid;
-  grid-template: 1fr / 5% repeat(7,1fr) 20% 10% 10% 5%;
+  display: flex;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
   position: absolute;
   top: 0;
   background-color: rgba(255, 255, 255, 0.7);
+  width: 100%;
+  max-height: 80px;
+}
+
+.fourFirst, .twoLast {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fourFirst {
+  justify-content: flex-start;
+}
+
+.twoLast {
+  justify-content: flex-end;
 }
 
 #myAccount {
@@ -43,47 +68,6 @@ p.nav-link {
 .a, .b, .c, .d, .e, .f, .g {
   color: #156296;
   font-weight: 600;
-}
-
-.a {
-  grid-area: 1 / 3 / 2 / 4;
-}
-
-.b {
-  grid-area: 1 / 4 / 2 / 6;
-}
-
-.c {
-  grid-area: 1/ 7 / 2 / 9;
-}
-
-.d {
-  grid-area: 1 / 6 / 2 / 7;
-}
-
-.e{
-  grid-area: 1 / 11 / 2 / 12;
-}
-
-.f {
-  grid-area: 1 / 10 / 2 / 11;
-}
-.g {
-  grid-area: 1 / 2 / 2 / 3;
-}
-
-.h {
-  grid-area: 1 / 10 / 2 / 13;
-}
-
-.logo {
-  width: 100px;
-  height: 50px;
-  /* margin: 2% 0 0 5%; */
-}
-
-.logo + figcaption {
-  color:black;
 }
 
 .toggleMenu {
@@ -143,27 +127,36 @@ form {
   z-index: 5;
 }
 
-.btn {
-  background-color: #2090B2;
-  color:#FFF;
-  margin-top:5%;
-  width: 100%;
-}
-
 .title_group > h1 {
   color: #FFF;
   padding: 0;
   margin: 0;
 }
 
-.link_buttons > .btn {
-  width: 20%;
+.link_buttons > .headerButton {
   margin-top: 0;
+  width: 20%;
+  background-color: #2090B2;
+  color: #000;
+  border-radius: 10%;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
 }
 
-.btn:hover {
+.link_buttons {
+  margin-top: -2rem;
+}
+
+.btn:not(#deleteButton):hover {
   background-color: #156296;
   color:#FFF;
+}
+
+.btn:not(#deleteButton) {
+  background-color: #2090B2;
+  color: #000;
+  margin-top:5%;
+  width: 100%;
 }
 
 .card {
@@ -184,6 +177,7 @@ form {
 .trip_icons {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .description {
@@ -290,11 +284,6 @@ input {
   color:#FFF;
 }
 
-nav, .btn:not('.btn-danger') {
-  background-color: #57B8FF;
-  color:#000;
-}
-
 .fa-user-times {
   color:red;
 }
@@ -362,6 +351,11 @@ td > img {
   width:50px;
 }
 
+.indexImg {
+  height: 100vh;
+  width: 100vw;
+}
+
 table {
   margin-top: 5%;
   width: 100%;
@@ -400,7 +394,7 @@ table {
   width: 100%;
 }
 
-.showUpdateForm {
+.showUpdateForm, .showPasswordForm {
   background-color: #FFF;
   border-bottom: 1px solid grey;
   color:#000;
@@ -408,8 +402,19 @@ table {
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem;
-
 }
+
+ .passwordForm {
+   background-color: #FFF;
+   color:#000;
+   display: flex;
+   justify-content: space-between;
+   padding: 1rem;
+ }
+
+ .passwordForm > input {
+  height: 32px;
+ }
 
 .avatarEdit {
   width: 80px;
@@ -419,4 +424,58 @@ table {
 
 .deleteInfo {
   color: #000;
+}
+
+@media screen and (max-width: 640px) {
+  #voletFerme {
+    position: relative;
+    left: -200px;
+    z-index:1;
+    -webkit-transition: all 0.5s ease-in;
+    -moz-transition: all 0.5s ease-in;
+    transition: all 0.5s ease-in;
+  }
+
+  #volet a.burger {
+    position: absolute;
+    left: 202px;
+    top: 2px;
+    display: block;
+    padding: 1% 1rem;
+    background-color: #e5e2d5;
+    border-radius: 5%;
+  }
+
+  #voletFerme:target #aller {
+    display: none;
+  }
+
+  #volet:target #retour {
+    display: block;
+  }
+
+  #voletFerme:target {
+    left: 0;
+    z-index: 4;
+  }
+
+  .fourFirst {
+    flex-direction: column;
+    width: 200px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: #FFF;
+    border-radius: 5%;
+  }
+
+  .fourFirst > .nav-item > a {
+    color: #000;
+    border-bottom: 1px solid #edebe6;
+
+  }
+
+
+
+
+
 }
