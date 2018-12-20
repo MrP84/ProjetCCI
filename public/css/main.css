@@ -10,6 +10,76 @@ header {
   position: relative;
 }
 
+.jumbo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.jumbo p {
+  font-size: 20rem;
+  color: #ef1524;
+  text-shadow: #000 1px 1px, #000 -1px 1px, #000 1px -1px, #000 -1px -1px;
+}
+
+.uTurn {
+  margin-top: -1rem !important;
+}
+
+.eq-c {
+	line-height: 1.4;
+	padding: 0.25em 0.5em;
+	font-size: 1.1em;
+  text-align: center;
+}
+
+.eq-c i {
+  letter-spacing: 1px;
+}
+
+.intsuma {
+    position: relative;
+    top: -5px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+.intsuma > span {
+    display: block;
+    font-size: 70%;
+}
+.intsuma .lim-up {
+    margin-bottom: -1.0ex;
+}
+.intsuma .lim {
+    margin-top: -0.5ex;
+}
+.intsuma .sum {
+    font-size: 1.5em;
+    font-weight: lighter;
+}
+.intsuma .sum-frac {
+    font-size: 1.5em;
+    font-weight: 100;
+}
+
+.radical {
+    position: relative;
+    top: -5px;
+    left: 10px;
+    font-size: 1.6em;
+    vertical-align: middle;
+}
+.n-root {
+    position: absolute;
+    top: -0.333em;
+    left: 0.333em;
+    font-size: 45%;
+}
+.radicand {
+    padding: 0 0.25em;
+    border-top: thin black solid;
+}
+
 .accueil {
   background-image: url('../../img/accueil.jpg');
   background-position: center 20%;
@@ -444,6 +514,7 @@ table {
     padding: 1% 1rem;
     background-color: #e5e2d5;
     border-radius: 5%;
+    color: #000;
   }
 
   #voletFerme:target #aller {
@@ -473,9 +544,5 @@ table {
     border-bottom: 1px solid #edebe6;
 
   }
-
-
-
-
 
 }
