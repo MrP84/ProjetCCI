@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $('#password1').on('focus', function() {
-        $('.hidden').removeClass('hidden').addClass('show');
+        $('#squares').removeClass('hidden').addClass('show');
     });
     $('#password1').keyup(function() {
         var pswd = $(this).val();
