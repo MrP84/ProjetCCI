@@ -19,7 +19,7 @@
   <nav class="grid">
     <div class="volet" id="voletFerme">
       <div class="volet" id="volet">
-          <a href="#volet" class="burger" id="retour" style="background-color: red;"><i class="fa fa-bars" aria-hidden="true"></i></a>
+          <a href="#volet" class="burger" id="retour"><i class="fa fa-times" aria-hidden="true"></i></a>
           <a href="#voletFerme" class="burger" id="aller"><i class="fa fa-bars" aria-hidden="true"></i></a>
         <div class="fourFirst" id="fourFirst">
           <div class="nav-item a">
@@ -64,7 +64,7 @@
           <ul id="displayMenu">
             <li><a href="./CRUD/editTripper.php">Editer mon profil <i class="fa fa-pencil" aria-hidden="true"></i></a></li>
             <li><a href="#">Voir mes carnets <i class="fa fa-eye" aria-hidden="true"></i></a></li>
-            <li class="logoutLink"><a href="<?=$path . '/';?>logout.php">Déconnexion <i class="fa fa-sign-out"></i></a></li>
+            <li class="logoutLink"><a href="<?=$path . '/';?>logout.php" onclick="localStorage.clear();">Déconnexion <i class="fa fa-sign-out"></i></a></li>
           </ul>
         </div>
       </div>
