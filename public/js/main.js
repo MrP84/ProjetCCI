@@ -235,6 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     };
 
+
+
     $('#validateUpdate').on('click', (e) => {
         e.preventDefault();
         let firstNameUpdate = ($('#firstNameUpdate').val() !== undefined)? $('#firstNameUpdate').val() : stockage[0].value;
@@ -272,5 +274,18 @@ document.addEventListener('DOMContentLoaded', () => {
         $('#updateCountry').text(countryUpdate);
         $('#updateBio').text(bioUpdate);
         $('#updateName').prop('disabled', false);
-    })
+    });
+
+    setTimeout(function() {
+        $('#four1').text('4')},
+        1000
+    );
+    setTimeout(function() {
+        $('#four2').text('0');},
+        2000
+    );
+    setTimeout(function() {
+        $('#four3').text('4');},
+        3000
+    );
 });
