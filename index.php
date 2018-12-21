@@ -9,6 +9,8 @@ $image = "img/accueil.jpg";
 $path = '.';
 $vue = $path . '/tpl/index.phtml';
 $index = true;
+//var_dump($index);
+
 //input date is the next friday
 $shift = date('N');
 switch ($shift) {
