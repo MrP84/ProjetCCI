@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $('#myAccount').on('click', () => {
-      $('#toggleMenu').removeClass('hiddenMenu').addClass('showMenu');
+        $('#toggleMenu').removeClass('hiddenMenu').addClass('showMenu');
     });
 
     $('#toggleMenu').mouseleave( () => {
@@ -76,13 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // });
 
     function createAndAppendInput(type, id, className, value, location) {
-      $('<input>').attr({
-          type: type,
-          id: id,
-          class: className,
-          name: id,
-          value: value
-      }).appendTo(location);
+        $('<input>').attr({
+            type: type,
+            id: id,
+            class: className,
+            name: id,
+            value: value
+        }).appendTo(location);
     };
 
     function validatePassword(password) {
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             return false;
         }
- }
+    }
 
     function checkPassword(password1, password2) {
         if (password1 === password2) {
@@ -144,63 +144,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $('#passwordUpdate').on('click', () => {
-      ($('#showPasswordForm').attr('class') === 'hidden')?$('#showPasswordForm').removeClass('hidden').addClass('showPasswordForm'):'';
-      var pwd1;
-      var pwd2;
-  });
+        ($('#showPasswordForm').attr('class') === 'hidden')?$('#showPasswordForm').removeClass('hidden').addClass('showPasswordForm'):'';
+        var pwd1;
+        var pwd2;
+    });
 
-      $('#initialPassword').on('change', () => {
-          $.ajax({
-              url: 'checkPwd.php',
-              data: { pwdKey : sha256($('#initialPassword').val()) },
-              async: false,
-              method : 'POST'
-          }).done((result) => {
-              if (result === 'ok') {
-                  $('#newPassword').prop('disabled', false);
+    $('#initialPassword').on('change', () => {
+        $.ajax({
+            url: 'checkPwd.php',
+            data: { pwdKey : sha256($('#initialPassword').val()) },
+            async: false,
+            method : 'POST'
+        }).done((result) => {
+            if (result === 'ok') {
+                $('#newPassword').prop('disabled', false);
 
-                  $('#newPassword').on('keyup', function() {
-                      if (pwd1 = validatePassword($(this).val())) {
-                          $('#confirmNewPassword').prop('disabled', false);
-                          console.log(sha256(pwd1));
-                      } else {
-                          console.log('erreur');
-                      };
-                  });
+                $('#newPassword').on('keyup', function() {
+                    if (pwd1 = validatePassword($(this).val())) {
+                        $('#confirmNewPassword').prop('disabled', false);
+                        console.log(sha256(pwd1));
+                    } else {
+                        console.log('erreur');
+                    };
+                });
 
-                  $('#confirmNewPassword').on('keyup', function() {
-                      if ($('#initialPassword').val() !== "" && $('#newPassword').val() !== "" && $('#confirmNewPassword').val() !== "") {
+                $('#confirmNewPassword').on('keyup', function() {
+                    if ($('#initialPassword').val() !== "" && $('#newPassword').val() !== "" && $('#confirmNewPassword').val() !== "") {
 
-                          if (pwd2 = validatePassword($(this).val())) {
-                              console.log(pwd2);
-                              if (checkPassword(pwd1, pwd2)) {
-                                  if ($('#error_show').attr('class') === 'error_show') {
-                                        $('#error_show').removeClass('error_show').addClass('hidden');
-                                  }
-                                  $('#validateNewPassword').prop('disabled', false).addClass('btn-success');
-                                  console.log('mots de passe identiques');
-                              } else {
-                                  let error = $('<div>').attr({
-                                      class : 'error_show',
-                                      id: 'error_show'
-                                  }).text('Les mots de passe ne sont pas identiques.');
-                                  error.appendTo('#showPasswordForm');
-                              }
-                          }
-                      }
-                  });
-              } else {
-                  $('#newPassword').prop('disabled', true);
-              }
-
-
-          })
+                        if (pwd2 = validatePassword($(this).val())) {
+                            console.log(pwd2);
+                            if (checkPassword(pwd1, pwd2)) {
+                                if ($('#error_show').attr('class') === 'error_show') {
+                                    $('#error_show').removeClass('error_show').addClass('hidden');
+                                }
+                                $('#validateNewPassword').prop('disabled', false).addClass('btn-success');
+                                console.log('mots de passe identiques');
+                            } else {
+                                let error = $('<div>').attr({
+                                    class : 'error_show',
+                                    id: 'error_show'
+                                }).text('Les mots de passe ne sont pas identiques.');
+                                error.appendTo('#showPasswordForm');
+                            }
+                        }
+                    }
+                });
+            } else {
+                $('#newPassword').prop('disabled', true);
+            }
 
 
-      });
+        })
 
 
-      try {
+    });
+
+
+    try {
         stockage = localStorage.getItem('src');
 
         if (JSON.parse(stockage) !== null) {
@@ -234,11 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             })
         };
-      } catch (e) {
+    } catch (e) {
 
-      } finally {
-
-      }
+    } finally {
+        
+    }
 
 
 
