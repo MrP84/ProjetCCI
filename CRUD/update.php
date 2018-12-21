@@ -4,6 +4,7 @@ session_start();
 
 include_once('../config/config.php');
 include_once('../lib/files.fct.php');
+include_once('../class/Security.php');
 
 try {
   $dbConnect = connectingToBdd();
@@ -15,13 +16,13 @@ try {
   $dbResult = $dbprepare2 -> fetch(PDO::FETCH_ASSOC);
 
   if (array_key_exists('firstNameUpdate', $_POST) && array_key_exists('lastNameUpdate', $_POST) && array_key_exists('cityUpdate', $_POST) && array_key_exists('countryUpdate', $_POST) && array_key_exists('pseudoUpdate', $_POST) && array_key_exists('emailUpdate', $_POST) && array_key_exists('bioUpdate', $_POST)) {
-    $firstNameUpdate = $_POST['firstNameUpdate'];
-    $lastNameUpdate = $_POST['lastNameUpdate'];
-    $pseudoUpdate = $_POST['pseudoUpdate'];
-    $emailUpdate = $_POST['emailUpdate'];
-    $cityUpdate = $_POST['cityUpdate'];
-    $countryUpdate = $_POST['countryUpdate'];
-    $bioUpdate = $_POST['bioUpdate'];
+    $firstNameUpdate = Security::bdd($_POST['firstNameUpdate']);
+    $lastNameUpdate = Security::bdd($_POST['lastNameUpdate']);
+    $pseudoUpdate = Security::bdd($_POST['pseudoUpdate']);
+    $emailUpdate = Security::bdd($_POST['emailUpdate']);
+    $cityUpdate = Security::bdd($_POST['cityUpdate']);
+    $countryUpdate = Security::bdd($_POST['countryUpdate']);
+    $bioUpdate = Security::bdd($_POST['bioUpdate']);
 
     $dbPrepare = $dbConnect -> prepare('UPDATE trippers SET firstName = :firstName, lastName = :lastName, email = :email, pseudo = :pseudo, city = :city, idCountry = :idCountry, bio = :bio WHERE idTripper = :idTripper');
     $dbPrepare -> execute(array(
@@ -37,9 +38,9 @@ try {
 
 
   } else if (array_key_exists('initialPassword', $_POST) && array_key_exists('newPassword', $_POST) && array_key_exists('confirmNewPassword', $_POST)) {
-   $pwd1 = $_POST['initialPassword'];
-   $pwd2 = $_POST['newPassword'];
-   $pwd3 = $_POST['confirmNewPassword'];
+   $pwd1 = Security::bdd($_POST['initialPassword']);
+   $pwd2 = Security::bdd($_POST['newPassword']);
+   $pwd3 = Security::bdd($_POST['confirmNewPassword']);
 
    if ($pwd2 == $pwd3)
    {

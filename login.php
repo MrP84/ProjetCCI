@@ -4,6 +4,7 @@ session_start();
 
 include('config/config.php');
 include('lib/files.fct.php');
+include_once('./class/Security.php');
 
 $title = 'Authentification';
 $path = '.';
@@ -17,10 +18,12 @@ $checkPwd = '';
 try {
 
     if (array_key_exists('userNameAuth', $_POST) && array_key_exists('inputPassword', $_POST)) {
-        $checkPwd = hash('sha256',$_POST['inputPassword']);
-        $checkUser = $_POST['userNameAuth'];
 
         $dbConnect = connectingToBdd();
+
+        $checkPwd = hash('sha256',Security::bdd($_POST['inputPassword']));
+        $checkUser = Security::bdd($_POST['userNameAuth']);
+
         $dbPrepare = $dbConnect -> prepare('SELECT idTripper, pseudo, password, firstName, admin, avatar FROM trippers WHERE pseudo = :pseudo');
         $dbPrepare -> execute(array('pseudo' => $checkUser));
         $user = $dbPrepare->fetch(PDO::FETCH_ASSOC);
@@ -29,19 +32,21 @@ try {
 
         if ($checkPwd === $user['password'] && $user['admin']) {
             $_SESSION['logged'] = true;
-            $_SESSION['user'] = $user['firstName'];
-            $_SESSION['avatar'] = $user['avatar'];
-            $_SESSION['pseudo'] = $user['pseudo'];
-            $_SESSION['id'] = $user['idTripper'];
+            $_SESSION['admin'] = true;
+            $_SESSION['user'] = Security::html($user['firstName']);
+            $_SESSION['avatar'] = Security::html($user['avatar']);
+            $_SESSION['pseudo'] = Security::html($user['pseudo']);
+            $_SESSION['id'] = Security::html($user['idTripper']);
 
             header('Location:./admin/index.php');
             exit();
         } else if ($checkPwd === $user['password'] && !$user['admin']) {
             $_SESSION['logged'] = true;
-            $_SESSION['user'] = $user['firstName'];
-            $_SESSION['avatar'] = $user['avatar'];
-            $_SESSION['pseudo'] = $user['pseudo'];
-            $_SESSION['id'] = $user['idTripper'];
+            $_SESSION['admin'] = false;
+            $_SESSION['user'] = Security::html($user['firstName']);
+            $_SESSION['avatar'] = Security::html($user['avatar']);
+            $_SESSION['pseudo'] = Security::html($user['pseudo']);
+            $_SESSION['id'] = Security::html($user['idTripper']);
 
             header('Location:index.php');
         } else {

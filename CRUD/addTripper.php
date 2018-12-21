@@ -3,6 +3,7 @@ session_start();
 
 include_once('../config/config.php');
 include_once('../lib/files.fct.php');
+include_once('../class/Security.php');
 
 $error = array();
 $title = 'Inscription';
@@ -10,7 +11,6 @@ $path = '..';
 $vue = $path . '/tpl/addTripper.phtml';
 $pays = explode('-', explode(',', $GLOBALS['_SERVER']['HTTP_ACCEPT_LANGUAGE'])[0])[1];
 
-echo 'début du script<br>';
 try {
 
   $dbConnect = connectingToBdd();
@@ -24,11 +24,10 @@ try {
   //Cas addition d'un nouvel utilisateur
   if (array_key_exists('firstName', $_POST) && array_key_exists('lastName', $_POST) && array_key_exists('bio', $_POST) && array_key_exists('country', $_POST) && array_key_exists('city', $_POST) && array_key_exists('dateOfBirth', $_POST) && array_key_exists('password1', $_POST) && array_key_exists('password2', $_POST) && array_key_exists('avatar', $_FILES) && array_key_exists('email', $_POST)) {
 
-    echo 'lancement des tests<br>';
     //test du mot de passe
 
-    $pwd1 = $_POST['password1'];
-    $pwd = $_POST['password2'];
+    $pwd1 = Security::bdd($_POST['password1']);
+    $pwd = Security::bdd($_POST['password2']);
 
     if ($pwd1 == $pwd)
     {
@@ -45,19 +44,18 @@ try {
     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
     $error[] = 'Cette adresse email n\'est pas valide.';
     else {
-      $email = $_POST['email'];
-      echo 'email validée<br>';
+      $email = Security::bdd($_POST['email']);
     }
 
 
     //Traitement des autres données saisies
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $bio = $_POST['bio'];
-    $pseudo = $_POST['pseudo'];
-    $dateOfBirth = $_POST['dateOfBirth'];
-    $city = $_POST['city'];
-    $country = $_POST['country'];
+    $firstName = Security::bdd($_POST['firstName']);
+    $lastName = Security::bdd($_POST['lastName']);
+    $bio = Security::bdd($_POST['bio']);
+    $pseudo = Security::bdd($_POST['pseudo']);
+    $dateOfBirth = Security::bdd($_POST['dateOfBirth']);
+    $city = Security::bdd($_POST['city']);
+    $country = Security::bdd($_POST['country']);
     $level = 1;
 
     if (!empty($error)) {
@@ -67,7 +65,6 @@ try {
       }
 
     } else {
-      echo 'coucou<br>';
       $dbprepare = $dbConnect -> prepare('INSERT INTO trippers(firstName, lastName, email, password, pseudo, dateOfBirth, city, idCountry, bio,  idLevel) VALUES (:firstName, :lastName, :email, :password, :pseudo, :dateOfBirth, :city, :country, :bio, :level)');
 
       $dbprepare -> execute(array(
@@ -134,7 +131,6 @@ try {
       }
     } else {
       $error[] = 'merci de remplir tous les champs';
-      echo 'Oh non... tous les champs ne sont pas remplis<br>';
     }
 
   } catch (PDOException $e) {

@@ -2,7 +2,7 @@
 
 session_start();
 //var_dump($_SESSION);
-if (!$_SESSION['logged']) {
+if (!$_SESSION['logged'] || !$_SESSION['admin']) {
 header('Location:../login.php');
 //$_SESSION
 }
@@ -23,10 +23,6 @@ try {
 
    $dbPrepare -> execute();
    $dbResult = $dbPrepare->fetchAll(PDO::FETCH_ASSOC);
-
-   //$age = age($dbResult[0]['dateToCompute']);
-   //$age = age('08/03/1984');
-   //var_dump($dbResult);
 
  } catch (PDOException $e) {
    echo 'Erreur de connexion : ' . $e->getMessage();
