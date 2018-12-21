@@ -200,40 +200,46 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
 
+      try {
+        stockage = localStorage.getItem('src');
 
-    stockage = localStorage.getItem('src');
+        if (JSON.parse(stockage) !== null) {
+            stockage = JSON.parse(stockage);
+        } else {
+            stockage = getAjax();
+        }
 
-    if (JSON.parse(stockage) !== null) {
-        stockage = JSON.parse(stockage);
-    } else {
-        stockage = getAjax();
-    }
+        function getAjax() {
+            var res = new Array();
+            let url = 'json.php';
+            $.ajax({
+                url: url,
+                async: false,
+                datatype: 'text'
+            }).done((results) => {
 
-    function getAjax() {
-        var res = new Array();
-        let url = 'json.php';
-        $.ajax({
-            url: url,
-            async: false,
-            datatype: 'text'
-        }).done((results) => {
-
-            results = JSON.parse(results);
-            for (var i in results) {
-                if (results.hasOwnProperty(i)) {
-                    tripper.push({
-                        label: i,
-                        value: results[i]
-                    });
+                results = JSON.parse(results);
+                for (var i in results) {
+                    if (results.hasOwnProperty(i)) {
+                        tripper.push({
+                            label: i,
+                            value: results[i]
+                        });
+                    }
                 }
-            }
 
-            localStorage.setItem('src', JSON.stringify(tripper));
-            res = tripper;
-            return res;
+                localStorage.setItem('src', JSON.stringify(tripper));
+                res = tripper;
+                return res;
 
-        })
-    };
+            })
+        };
+      } catch (e) {
+
+      } finally {
+
+      }
+
 
 
 
