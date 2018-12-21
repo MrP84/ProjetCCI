@@ -4,7 +4,7 @@ session_start();
 
 include_once('../config/config.php');
 include_once('../lib/files.fct.php');
-include_once('../class/Security.php')
+include_once('../class/Security.php');
 
 try {
   $dbConnect = connectingToBdd();
