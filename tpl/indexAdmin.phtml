@@ -24,11 +24,11 @@
         <td><?=$value['lastName'];?></td>
         <td><?=age($value['dateToCompute']);?> ans</td>
         <td><?=$value['email'];?></td>
-        <td><?=$value['bio'];?></td>
+        <td><?=wordCut($value['bio']);?></td>
         <td><?=$value['nom_fr_fr'];?></td>
         <td><?=$value['registerDate'];?></td>
         <td><?=$value['levelName'];?></td>
-        <td><a href="editUser.php?line=<?=$value['idTripper'];?>"><i class="fa fa-pencil-square-o"></i></a> <a data-id="<?=$value['idTripper'];?>" class="lienModal" href="delUser.php?line=<?=$value['idTripper'];?>"><i class="fa fa-user-times"></i></a></td>
+        <td><a href="editUser.php?id=<?=$value['idTripper'];?>"><i class="fa fa-pencil-square-o"></i></a> <a data-id="<?=$value['idTripper'];?>" class="lienModal" href="delUser.php?id=<?=$value['idTripper'];?>"><i class="fa fa-user-times"></i></a></td>
       </tr>
       <?php endforeach;?>
     </tbody>
